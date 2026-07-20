@@ -28,7 +28,12 @@ class MarcaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $marca = Marca::create([
+            'id'=>$request->id,
+            'nome'=>$request->nome,
+            'imagem'=>$request->imagem,
+        ]);
+       return $marca;
     }
 
     /**

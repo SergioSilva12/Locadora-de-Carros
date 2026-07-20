@@ -17,3 +17,4 @@ Route::apiResource('carro', CarroController::class);
 Route::apiResource('locacao', LocacaoController::class);
 Route::apiResource('marca', MarcaController::class);
 Route::apiResource('modelo', ModeloController::class);
+
