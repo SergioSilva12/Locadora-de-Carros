@@ -12,7 +12,7 @@ class MarcaRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,15 +22,17 @@ class MarcaRequest extends FormRequest
      */
     public function rules(): array
     {
+        $id = $this->route('marca')->id;
         return [
-            'nome'=>['required','unique:marcas'],
-            'imagem'=>'required',
+            'nome' => ['required', 'unique:marcas,nome,'.$id],
+            'imagem' => 'required',
         ];
     }
-    public function messages(): array{
+    public function messages(): array
+    {
         return [
-            'required'=>'O campo :attribute é obrigatorio',
-            'unique'=> 'Já existe uma marca com esse nome'
+            'required' => 'O campo :attribute é obrigatorio',
+            'unique' => 'Já existe uma marca com esse nome'
         ];
     }
 }

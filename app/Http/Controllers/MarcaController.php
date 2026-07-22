@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Marca;
 use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
+use App\Http\Requests\MarcaRequest;
 
 class MarcaController extends Controller
 {
@@ -28,9 +29,9 @@ class MarcaController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(MarcaRequest $request)
     {
-        $marca = Marca::create($request->valideted());
+        $marca = Marca::create($request->validated());
         return $marca;
     }
 
@@ -54,9 +55,12 @@ class MarcaController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Marca $marca)
+    public function update(MarcaRequest $request, Marca $marca)
     {
-        $marca->update($request->all());
+        if($request->method()==='PATCH'){
+            return 'testando o método';
+        }
+        $marca->update($request->validated());
         return $marca;
     }
 
