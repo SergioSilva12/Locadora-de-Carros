@@ -32,6 +32,8 @@ class MarcaController extends Controller
     public function store(MarcaRequest $request)
     {
         $marca = Marca::create($request->validated());
+        $image = $request->file('imagem');
+        $image->store('imagens');
         return $marca;
     }
 
@@ -40,7 +42,7 @@ class MarcaController extends Controller
      */
     public function show(Marca $marca)
     {
-        // $marca = Marca::where('id',$marca->id)->get(); ou usar so $marca
+        $marca = Marca::where('id', $marca->id)->get(); //ou usar so Marca
         return $marca;
     }
 
@@ -57,7 +59,7 @@ class MarcaController extends Controller
      */
     public function update(MarcaRequest $request, Marca $marca)
     {
-        if($request->method()==='PATCH'){
+        if ($request->method() === 'PATCH') {
             return 'testando o método';
         }
         $marca->update($request->validated());
