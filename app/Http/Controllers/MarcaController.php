@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Marca;
+use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
 
 class MarcaController extends Controller
@@ -12,7 +13,8 @@ class MarcaController extends Controller
      */
     public function index()
     {
-        //
+        $marcas = Marca::all();
+        return $marcas;
     }
 
     /**
@@ -28,12 +30,8 @@ class MarcaController extends Controller
      */
     public function store(Request $request)
     {
-        $marca = Marca::create([
-            'id'=>$request->id,
-            'nome'=>$request->nome,
-            'imagem'=>$request->imagem,
-        ]);
-       return $marca;
+        $marca = Marca::create($request->valideted());
+        return $marca;
     }
 
     /**
@@ -41,7 +39,8 @@ class MarcaController extends Controller
      */
     public function show(Marca $marca)
     {
-        //
+        // $marca = Marca::where('id',$marca->id)->get(); ou usar so $marca
+        return $marca;
     }
 
     /**
@@ -57,7 +56,8 @@ class MarcaController extends Controller
      */
     public function update(Request $request, Marca $marca)
     {
-        //
+        $marca->update($request->all());
+        return $marca;
     }
 
     /**
@@ -65,6 +65,7 @@ class MarcaController extends Controller
      */
     public function destroy(Marca $marca)
     {
-        //
+        $marca->delete();
+        return 'marca removida com sucesso';
     }
 }
