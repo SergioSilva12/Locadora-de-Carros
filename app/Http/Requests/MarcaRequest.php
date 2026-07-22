@@ -22,10 +22,10 @@ class MarcaRequest extends FormRequest
      */
     public function rules(): array
     {
-        $id = $this->route('marca')->id;
+        $id = $this->route('marca')?->id;
         return [
             'nome' => ['required', 'unique:marcas,nome,'.$id],
-            'imagem' => 'required',
+            'imagem' => ['required','image'],
         ];
     }
     public function messages(): array
