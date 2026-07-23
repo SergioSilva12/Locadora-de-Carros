@@ -8,4 +8,7 @@ class Marca extends Model
 {
     protected $fillable = ['nome', 'imagem', 'id'];
 
+    public function modelos(){
+        return $this->hasMany('App\Models\Modelo');
+    }
 }

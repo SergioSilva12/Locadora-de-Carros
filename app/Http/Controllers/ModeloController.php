@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ModeloRequest;
 use App\Models\Modelo;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ModeloController extends Controller
 {
@@ -12,7 +13,8 @@ class ModeloController extends Controller
      */
     public function index()
     {
-        //
+        $modelo = Modelo::all();
+        return $modelo;
     }
 
     /**
@@ -26,9 +28,17 @@ class ModeloController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ModeloRequest $request)
     {
-        //
+        $dados = $request->validated();
+
+        if ($request->hasFile('imagem')) {
+            $dados['imagem'] = $request->file('imagem')->store('imagens/modelos', 'public');
+        }
+
+        $modelo = Modelo::create($dados);
+
+        return response()->json($modelo, 201);
     }
 
     /**
@@ -36,7 +46,8 @@ class ModeloController extends Controller
      */
     public function show(Modelo $modelo)
     {
-        //
+        $modelo = Modelo::where('id', $modelo->id)->get(); //ou usar so Marca
+        return $modelo;
     }
 
     /**
@@ -50,9 +61,17 @@ class ModeloController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Modelo $modelo)
+    public function update(ModeloRequest $request, Modelo $modelo)
     {
-        //
+        $dados = $request->validated();
+
+        if ($request->hasFile('imagem')) {
+            $dados['imagem'] = $request->file('imagem')->store('imagens/modelos', 'public');
+        }
+
+        $modelo->update($dados);
+
+        return $modelo;
     }
 
     /**
@@ -60,6 +79,10 @@ class ModeloController extends Controller
      */
     public function destroy(Modelo $modelo)
     {
-        //
+        if ($modelo->imagem) {
+            Storage::disk('public')->delete($modelo->imagem);
+        }
+        $modelo->delete();
+        return 'O modelo foi removido com sucesso';
     }
 }
