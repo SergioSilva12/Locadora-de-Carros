@@ -43,7 +43,8 @@ class MarcaController extends Controller
      */
     public function show(Marca $marca)
     {
-        $marca = Marca::where('id', $marca->id)->get(); //ou usar so Marca
+        $marca->load('modelo');
+         //ou usar so Marca
         return $marca;
     }
 

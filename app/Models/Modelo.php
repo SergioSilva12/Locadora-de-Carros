@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Modelo extends Model
 {
@@ -10,8 +11,8 @@ class Modelo extends Model
 
     protected $fillable = ['marca_id', 'nome', 'imagem', 'numero_portas', 'lugares', 'abs', 'air_bag'];
 
-    public function marca(){
-
-        return $this->belongsTo('App\Models\Marca');
+    public function marca(): BelongsTo
+    {
+        return $this->belongsTo(Marca::class);
     }
 }

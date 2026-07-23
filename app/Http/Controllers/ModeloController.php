@@ -46,7 +46,8 @@ class ModeloController extends Controller
      */
     public function show(Modelo $modelo)
     {
-        $modelo = Modelo::where('id', $modelo->id)->get(); //ou usar so Marca
+        
+        $modelo->load('marca'); //ou usar so Marca
         return $modelo;
     }
 
