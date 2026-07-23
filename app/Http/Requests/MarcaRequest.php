@@ -25,14 +25,15 @@ class MarcaRequest extends FormRequest
         $id = $this->route('marca')?->id;
         return [
             'nome' => ['required', 'unique:marcas,nome,'.$id],
-            'imagem' => ['required','image'],
+            'imagem' => ['required','image:png'], //aceitando apenas png
         ];
     }
     public function messages(): array
     {
         return [
             'required' => 'O campo :attribute é obrigatorio',
-            'unique' => 'Já existe uma marca com esse nome'
+            'unique' => 'Já existe uma marca com esse nome',
+            'image'=> 'O arquivo deve ser uma imagem do tipo png'
         ];
     }
 }

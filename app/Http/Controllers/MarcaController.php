@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Marca;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
 use App\Http\Requests\MarcaRequest;
@@ -59,9 +60,10 @@ class MarcaController extends Controller
      */
     public function update(MarcaRequest $request, Marca $marca)
     {
-        if ($request->method() === 'PATCH') {
-            return 'testando o método';
+        if ($request->hasFile('imagem')) {
+            $dados['imagem'] = $imagem = $request->file('imagem')->store('imagens', 'public');
         }
+        $marca->update($dados);
         $marca->update($request->validated());
         return $marca;
     }
@@ -71,6 +73,9 @@ class MarcaController extends Controller
      */
     public function destroy(Marca $marca)
     {
+        if ($marca->imagem) {
+            Storage::disk('public')->delete($marca->imagem);
+        }
         $marca->delete();
         return 'marca removida com sucesso';
     }
