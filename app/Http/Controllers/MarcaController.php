@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
 use App\Http\Requests\MarcaRequest;
+use App\Repositories\MarcaRepository;
 
 class MarcaController extends Controller
 {
@@ -15,6 +16,7 @@ class MarcaController extends Controller
      */
     public function index()
     {
+        $marcaRepository = new MarcaRepository($this->marca);
         $marcas = Marca::all();
         return $marcas;
     }
@@ -43,6 +45,7 @@ class MarcaController extends Controller
      */
     public function show(Marca $marca)
     {
+        $marca = Marca::find(1);
         $marca->load('modelo');
          //ou usar so Marca
         return $marca;

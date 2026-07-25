@@ -46,7 +46,7 @@ class ModeloController extends Controller
      */
     public function show(Modelo $modelo)
     {
-        
+
         $modelo->load('marca'); //ou usar so Marca
         return $modelo;
     }
