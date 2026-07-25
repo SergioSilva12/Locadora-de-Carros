@@ -13,13 +13,13 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::apiResource('cliente', ClienteController::class);
-Route::apiResource('carro', CarroController::class);
-Route::apiResource('locacao', LocacaoController::class);
-Route::apiResource('marca', MarcaController::class);
-Route::apiResource('modelo', ModeloController::class);
+Route::apiResource('cliente', ClienteController::class)->middleware('jwt');
+Route::apiResource('carro', CarroController::class)->middleware('jwt');
+Route::apiResource('locacao', LocacaoController::class)->middleware('jwt');
+Route::apiResource('marca', MarcaController::class)->middleware('jwt');
+Route::apiResource('modelo', ModeloController::class)->middleware('jwt');
 
-Route::post('login',[AuthController::class ,'login']);
-Route::post('logout', [AuthController::class ,'logout']);
-Route::post('refresh', [AuthController::class ,'refresh']);
-Route::post('me', [AuthController::class ,'me']);
+Route::post('login', [AuthController::class, 'login']);
+Route::post('logout', [AuthController::class, 'logout']);
+Route::post('refresh', [AuthController::class, 'refresh']);
+Route::post('me', [AuthController::class, 'me']);
