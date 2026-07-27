@@ -9,4 +9,6 @@ class Carro extends Model
 {
     /** @use HasFactory<\Database\Factories\CarroFactory> */
     use HasFactory;
+
+    protected $fillable = ['modelo_id', 'placa', 'disponivel', 'km'];
 }

@@ -2,65 +2,41 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Cliente;
 use App\Http\Requests\StoreClienteRequest;
 use App\Http\Requests\UpdateClienteRequest;
+use App\Models\Cliente;
+use Illuminate\Http\JsonResponse;
 
 class ClienteController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(): JsonResponse
     {
-        //
+        return response()->json(Cliente::query()->latest()->get());
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function store(StoreClienteRequest $request): JsonResponse
     {
-        //
+        $cliente = Cliente::create($request->validated());
+
+        return response()->json($cliente, 201);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreClienteRequest $request)
+    public function show(Cliente $cliente): JsonResponse
     {
-        //
+        return response()->json($cliente);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Cliente $cliente)
+    public function update(UpdateClienteRequest $request, Cliente $cliente): JsonResponse
     {
-        //
+        $cliente->update($request->validated());
+
+        return response()->json($cliente);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Cliente $cliente)
+    public function destroy(Cliente $cliente): JsonResponse
     {
-        //
-    }
+        $cliente->delete();
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateClienteRequest $request, Cliente $cliente)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Cliente $cliente)
-    {
-        //
+        return response()->json(['message' => 'Cliente removido com sucesso']);
     }
 }

@@ -2,33 +2,38 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
-    public function login(Request $request)
+    public function login(Request $request): JsonResponse
     {
-        $credenciais = $request->all(['email', 'password']);
-        // Autenticação usuario
-        $token = auth('api')->attempt($credenciais);
-        if($token){
-            return response()->json(['token'=>$token]);
+        $credentials = $request->only(['email', 'password']);
+
+        if (! $token = auth('api')->attempt($credentials)) {
+            return response()->json(['erro' => 'Usuario ou senha invalido'], 403);
         }
-        else{
-            return response()->json(['erro'=>'Usuario ou senha invalido'],403);
-        }
-        return 'login';
+
+        return response()->json(['token' => $token]);
     }
-    public function logout()
+
+    public function logout(): JsonResponse
     {
-        return 'logout';
+        auth('api')->logout();
+
+        return response()->json(['msg' => 'Logout realizado com sucesso']);
     }
-    public function refresh()
+
+    public function refresh(): JsonResponse
     {
-        return 'refresh';
+        $token = auth('api')->refresh();
+
+        return response()->json(['token' => $token]);
     }
-    public function me()
+
+    public function me(): JsonResponse
     {
-        return 'me';
+        return response()->json(auth()->user());
     }
 }

@@ -7,23 +7,18 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class StoreCarroRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, ValidationRule|array<mixed>|string>
-     */
     public function rules(): array
     {
         return [
-            //
+            'modelo_id' => ['required', 'integer', 'exists:modelos,id'],
+            'placa' => ['required', 'string', 'max:10', 'unique:carros,placa'],
+            'disponivel' => ['required', 'boolean'],
+            'km' => ['required', 'integer', 'min:0'],
         ];
     }
 }
