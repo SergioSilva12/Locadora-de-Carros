@@ -8,17 +8,23 @@
                     <div class="card-body">
                         <div class="row g-3">
                             <div class="col form-group">
-                                <label for="inputId">ID</label>
-                                <input type="number" class="form-control" id="inputId" aria-describedby="emailHelp"
-                                    placeholder="ID">
-                                <small id="emailHelp" class="form-text text-muted">Opcional, informe o ID da
-                                    marca.</small>
+                                <input-container-component titulo="ID" id="inputId" id-help="idHelp"
+                                    texto-ajuda="Opcional, informe o id da marca">
+
+                                    <input type="number" class="form-control" id="inputId" aria-describedby="idHelp"
+                                        placeholder="ID">
+
+                                </input-container-component>
+
                             </div>
                             <div class="col form-group">
-                                <label for="nome">Nome:</label>
-                                <input type="text" class="form-control" id="nome" placeholder="Nome da marca"
-                                    aria-describedby="nomeHelp">
-                                <small id="nomeHelp" class="form-text text-muted">Opcional, o nome da marca.</small>
+                                <input-container-component titulo="Nome da Marca" id="nome" id-help="idHelp"
+                                    texto-ajuda="Opcional, informe o nome da marca">
+
+                                    <input type="text" class="form-control" id="nome" placeholder="Nome da marca"
+                                        aria-describedby="nomeHelp">
+
+                                </input-container-component>
                             </div>
                         </div>
                     </div>
