@@ -21,6 +21,7 @@ import HomeComponent from './components/Home.vue';
 import MarcasComponent from './components/Marcas.vue';
 import InputContainer from './components/InputContainer.vue';
 import TableComponent from './components/Table.vue';
+import CardComponent from './components/Cards.vue';
 
 app.component('example-component', ExampleComponent);
 app.component('login-component', LoginComponent);
@@ -28,6 +29,7 @@ app.component('home-component', HomeComponent);
 app.component('marca-component',MarcasComponent);
 app.component('input-container-component', InputContainer);
 app.component('table-component',TableComponent);
+app.component('cards-component',CardComponent);
 
 /**
  * The following block of code may be used to automatically register your

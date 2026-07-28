@@ -2,11 +2,9 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <div class="card mb-3">
-                    <div class="card-header">Busca de Marcas</div>
 
-                    <!-- IINICIO DO CARD DE BUSCA -->
-                    <div class="card-body">
+                <cards-component titulo="Busca de marcas">
+                    <template v-slot:conteudo>
                         <div class="row g-3">
                             <div class="col form-group">
                                 <input-container-component titulo="ID" id="inputId" id-help="idHelp"
@@ -28,25 +26,24 @@
                                 </input-container-component>
                             </div>
                         </div>
-                    </div>
+                    </template>
 
-                    <div class="card-footer">
+                    <template v-slot:rodape>
                         <button type="submit" class="btn btn-primary btn-sm float-end">Pesquisar</button>
-                    </div>
-                    <!-- FIM DO CARD DE BUSCA -->
-                </div>
-                <!-- INICIO DO CARD DE LISTAGEM DE MARCAS-->
-                <div class="card mb-3">
-                    <div class="card-header">Relações de marcas</div>
-                    <table-component></table-component>
-                    <div class="card-body">
-                        
-                    </div>
+                    </template>
+                </cards-component>
 
-                    <div class="card-footer">
+                
+                <!-- INICIO DO CARD DE LISTAGEM DE MARCAS-->
+                <cards-component titulo="Relações de marcas">
+                    <template v-slot:conteudo>
+                        <table-component></table-component>
+                    </template>
+                    <template v-slot:rodape>
                         <button type="submit" class="btn btn-primary btn-sm float-end">Adicionar</button>
-                    </div>
-                </div>
+                    </template>
+                </cards-component>
+
             </div>
         </div>
     </div>
