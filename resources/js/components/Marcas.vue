@@ -54,7 +54,7 @@
                             texto-ajuda="Informe o nome da marca">
 
                             <input type="text" class="form-control" id="nome" placeholder="Nome da marca"
-                                aria-describedby="nomeHelp">
+                                aria-describedby="nomeHelp" v-model="nomeMarca">
                         </input-container-component>
                     </div>
 
@@ -63,13 +63,14 @@
                             texto-ajuda="Selecione uma imagem no formato PNG">
 
                             <input type="file" class="form-control-file" id="nome" placeholder="Selecione uma imagem"
-                                aria-describedby="nomeHelp">
+                                aria-describedby="nomeHelp" @change="carregarImagem($event)">
+                            {{ arquivoImagem }}
                         </input-container-component>
                     </div>
                 </template>
                 <template v-slot:rodape>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                    <button type="button" class="btn btn-primary">Salvar</button>
+                    <button type="button" class="btn btn-primary" @click="salvar">Salvar</button>
                 </template>
             </modal-component>
         </div>
@@ -77,5 +78,39 @@
 </template>
 
 <script>
+export default {
+    data() {
+        return {
+            urlBase: 'http://127.0.0.1:8000/api/v1/marca',
+            nomeMarca: '',
+            arquivoImagem: [],
+        }
+    },
+    methods: {
+        carregarImagem(event) {
+            this.arquivoImagem = event.target.files;
+        },
+        salvar() {
+            // Criando o formulário
+            let formData = new FormData();
+            formData.append('nome', this.nomeMarca);
+            formData.append('imagem', this.arquivoImagem[0]);
 
+            let config = {
+                headers: {
+                    'Content-Type':'multipart/form-data',
+                    'Accept':'application/json'
+                }
+            };
+
+            axios.post(this.urlBase,formData,config)
+            .then(response=>{
+                console.log(response);
+            })
+            .catch(errors =>{
+                console.log(errors);
+            });
+        }
+    }
+}
 </script>
