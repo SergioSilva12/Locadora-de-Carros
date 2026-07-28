@@ -20,12 +20,14 @@ import LoginComponent from './components/Login.vue';
 import HomeComponent from './components/Home.vue';
 import MarcasComponent from './components/Marcas.vue';
 import InputContainer from './components/InputContainer.vue';
+import TableComponent from './components/Table.vue';
 
 app.component('example-component', ExampleComponent);
 app.component('login-component', LoginComponent);
 app.component('home-component', HomeComponent);
 app.component('marca-component',MarcasComponent);
 app.component('input-container-component', InputContainer);
+app.component('table-component',TableComponent);
 
 /**
  * The following block of code may be used to automatically register your
