@@ -22,8 +22,8 @@ import MarcasComponent from './components/Marcas.vue';
 import InputContainer from './components/InputContainer.vue';
 import TableComponent from './components/Table.vue';
 import CardComponent from './components/Cards.vue';
-import ModalComponent from './components/Modal.vue'
-import Modal from './components/Modal.vue';
+import ModalComponent from './components/Modal.vue';
+import AlertComponent from './components/Alert.vue';
 
 app.component('example-component', ExampleComponent);
 app.component('login-component', LoginComponent);
@@ -33,6 +33,7 @@ app.component('input-container-component', InputContainer);
 app.component('table-component',TableComponent);
 app.component('cards-component',CardComponent);
 app.component('modal-component', ModalComponent);
+app.component('alert-component',AlertComponent);
 
 /**
  * The following block of code may be used to automatically register your
