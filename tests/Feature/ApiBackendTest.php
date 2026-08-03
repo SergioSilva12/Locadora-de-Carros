@@ -3,8 +3,10 @@
 namespace Tests\Feature;
 
 use App\Models\Cliente;
+use App\Models\Marca;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
@@ -38,7 +40,7 @@ class ApiBackendTest extends TestCase
 
         $listResponse->assertStatus(200)
             ->assertJson([]);
-
+/////
         $storeResponse = $this->withHeader('Authorization', 'Bearer ' . $token)
             ->postJson('/api/v1/cliente', ['nome' => 'Maria']);
 
@@ -54,5 +56,27 @@ class ApiBackendTest extends TestCase
 
         $showResponse->assertStatus(200)
             ->assertJsonPath('nome', 'Maria');
+    }
+
+    public function test_marca_store_persists_image_path_for_browser_access(): void
+    {
+        $user = User::factory()->create();
+        $token = auth('api')->login($user);
+
+        $imagem = UploadedFile::fake()->create('logo.png', 1, 'image/png');
+
+        $response = $this->withHeader('Authorization', 'Bearer ' . $token)
+            ->postJson('/api/v1/marca', [
+                'nome' => 'Toyota',
+                'imagem' => $imagem,
+            ]);
+
+        $response->assertStatus(201);
+
+        $marca = Marca::query()->where('nome', 'Toyota')->firstOrFail();
+
+        $this->assertNotNull($marca->imagem);
+        $this->assertStringContainsString('imagens/', $marca->imagem);
+        $this->assertStringEndsWith('.png', $marca->imagem);
     }
 }

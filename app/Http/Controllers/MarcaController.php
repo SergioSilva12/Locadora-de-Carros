@@ -32,10 +32,15 @@ class MarcaController extends Controller
      */
     public function store(MarcaRequest $request)
     {
-        $marca = Marca::create($request->validated());
-        $imagem = $request->file('imagem')->store('imagens', 'public');
+        $dados = $request->validated();
 
-        return $marca;
+        if ($request->hasFile('imagem')) {
+            $dados['imagem'] = $request->file('imagem')->store('imagens', 'public');
+        }
+
+        $marca = Marca::create($dados);
+
+        return response()->json($marca, 201);
     }
 
     /**
@@ -62,11 +67,14 @@ class MarcaController extends Controller
      */
     public function update(MarcaRequest $request, Marca $marca)
     {
+        $dados = $request->validated();
+
         if ($request->hasFile('imagem')) {
-            $dados['imagem'] = $imagem = $request->file('imagem')->store('imagens', 'public');
+            $dados['imagem'] = $request->file('imagem')->store('imagens', 'public');
         }
+
         $marca->update($dados);
-        $marca->update($request->validated());
+
         return $marca;
     }
 

@@ -10,11 +10,14 @@
                 <tr v-for="m in dados" :key="m.id">
                     <th scope="row">{{m.id}}</th>
                     <td>{{m.nome}}</td>
-                    <td><img :src="`http://localhost:8000/storage/${m.imagem}`"></td>
+                    <td>
+                        <img v-if="m.imagem" :src="`/storage/${m.imagem}`" alt="Imagem da marca" class="img-fluid" style="max-width: 80px;">
+                        <span v-else>Sem imagem</span>
+                    </td>
                 </tr>
             </tbody>
         </table>
-       
+       {{ dados }}
     </div>
 </template>
 
