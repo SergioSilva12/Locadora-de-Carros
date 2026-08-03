@@ -1,38 +1,25 @@
 <template>
-    <table class="table table-hover">
-        <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">First</th>
-                <th scope="col">Last</th>
-                <th scope="col">Handle</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-            </tr>
-            <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-            </tr>
-            <tr>
-                <th scope="row">3</th>
-                <td>Larry</td>
-                <td>the Bird</td>
-                <td>@twitter</td>
-            </tr>
-        </tbody>
-    </table>
+    <div>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col" v-for="titulo in titulos" :key="titulo">{{ titulo }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="m in dados" :key="m.id">
+                    <th scope="row">{{m.id}}</th>
+                    <td>{{m.nome}}</td>
+                    <td><img :src="`http://localhost:8000/storage/${m.imagem}`"></td>
+                </tr>
+            </tbody>
+        </table>
+       
+    </div>
 </template>
 
 <script>
 export default {
-
+    props:['dados','titulos'],
 }
 </script>
