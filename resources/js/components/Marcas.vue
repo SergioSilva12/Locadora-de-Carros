@@ -37,7 +37,7 @@
                 <!-- INICIO DO CARD DE LISTAGEM DE MARCAS-->
                 <cards-component titulo="Relações de marcas">
                     <template v-slot:conteudo>
-                        <table-component></table-component>
+                        <table-component :dados="marcas"></table-component>
                     </template>
                     <template v-slot:rodape>
                         <button type="submit" class="btn btn-primary btn-sm float-end" data-bs-toggle="modal"
@@ -49,8 +49,10 @@
             <!-- MODAL -->
             <modal-component id="modalMarca" titulo="Adicionar marca">
                 <template v-slot:alertas>
-                    <alert-component tipo="success" v-if="transacaoStatus=='Adicionado'" :detalhes="transacaoDetalhes" titulo="Marca cadastrada com sucesso"></alert-component>
-                    <alert-component tipo="danger" v-if="transacaoStatus == 'Erro'" :detalhes="transacaoDetalhes" titulo="Erro ao tentar cadastrar a marca"></alert-component>
+                    <alert-component tipo="success" v-if="transacaoStatus == 'Adicionado'" :detalhes="transacaoDetalhes"
+                        titulo="Marca cadastrada com sucesso"></alert-component>
+                    <alert-component tipo="danger" v-if="transacaoStatus == 'Erro'" :detalhes="transacaoDetalhes"
+                        titulo="Erro ao tentar cadastrar a marca"></alert-component>
                 </template>
                 <template v-slot:conteudo>
                     <div class="form-group mb-2">
@@ -79,6 +81,7 @@
             </modal-component>
         </div>
     </div>
+    <button @click="carregarLista">Testando</button>
 </template>
 
 <script>
@@ -88,11 +91,23 @@ export default {
             urlBase: 'http://127.0.0.1:8000/api/v1/marca',
             nomeMarca: '',
             arquivoImagem: [],
-            transacaoStatus:'',
-            transacaoDetalhes:'',
+            transacaoStatus: '',
+            transacaoDetalhes: '',
+            marcas: []
         }
     },
     methods: {
+        carregarLista() {
+            axios.get(this.urlBase)
+                .then(response => {
+                    this.marcas = response.data;
+                    console.log(this.marcas);
+                })
+                .catch(errors => {
+                    console.log(errors);
+
+                });
+        },
         carregarImagem(event) {
             this.arquivoImagem = event.target.files;
         },
@@ -104,23 +119,26 @@ export default {
 
             let config = {
                 headers: {
-                    'Content-Type':'multipart/form-data',
-                    'Accept':'application/json'
+                    'Content-Type': 'multipart/form-data',
+                    'Accept': 'application/json'
                 }
             };
 
-            axios.post(this.urlBase,formData,config)
-            .then(response=>{
-                this.transacaoStatus = 'Adicionado';
-                this.transacaoDetalhes = response;
-                console.log(response);
-            })
-            .catch(errors =>{
-                this.transacaoStatus = 'Erro';
-                this.transacaoDetalhes = errors.response;
-                console.log(errors);
-            });
+            axios.post(this.urlBase, formData, config)
+                .then(response => {
+                    this.transacaoStatus = 'Adicionado';
+                    this.transacaoDetalhes = response;
+                    console.log(response);
+                })
+                .catch(errors => {
+                    this.transacaoStatus = 'Erro';
+                    this.transacaoDetalhes = errors.response;
+                    console.log(errors);
+                });
         }
+    },
+    mounted() {
+        this.carregarLista();
     }
 }
 </script>

@@ -16,9 +16,7 @@ class MarcaController extends Controller
      */
     public function index()
     {
-        $marcaRepository = new MarcaRepository($this->marca);
-        $marcas = Marca::all();
-        return $marcas;
+        return Marca::all();
     }
 
     /**
